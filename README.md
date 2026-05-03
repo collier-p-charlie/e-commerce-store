@@ -25,3 +25,26 @@ cd backend
 alembic revision --autogenerate -m "initial schema"
 alembic upgrade head  # this applies all migrations up to the latest
 ```
+
+For frontend setup, in root we can run
+
+```bash
+npm --version
+npm create vite@latest frontend -- --template react
+```
+
+Then for dependencies run this:
+
+```bash
+cd frontend
+npm install
+npm install axios react-router-dom zustand @tanstack/react-query
+npm install -D tailwindcss postcss autoprefixer @tailwindcss/vite
+```
+
+To run the server we run
+
+```bash
+cd frontend
+npm run dev
+```

@@ -24,7 +24,7 @@ def get_products(
     category: CategoryFilter = None,
     search: SearchFilter = None,
     page: PageParam = 1,
-    limit: LimitParam = None
+    limit: LimitParam = 20
 ):
     query = db.query(Product)
 
