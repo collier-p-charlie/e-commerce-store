@@ -1,0 +1,27 @@
+[project]
+name = "e-commerce-store"
+description = "Repository for a full-stack e-commerce store"
+authors = [
+  { name = "Charlie Collier", email = "collier.p.charlie@gmail.com" }
+]
+maintainers = [
+  { name = "Charlie Collier", email = "collier.p.charlie@gmail.com" }
+]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Framework :: Hatch"
+]
+version = "1.0.0"  # https://packaging.python.org/en/latest/discussions/versioning/
+requires-python = ">=3.13"
+dependencies = []
+
+[project.urls]
+Documentation = ""
+Repository = "https://github.com/collier-p-charlie/e-commerce-store"
+Issues = "https://github.com/collier-p-charlie/e-commerce-store/issues"
+Changelog = "https://github.com/collier-p-charlie/e-commerce-store/blob/main/CHANGELOG.md"
+
+[tool.uv.workspace]
+members = ["backend"]
