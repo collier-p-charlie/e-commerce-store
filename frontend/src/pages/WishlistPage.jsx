@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useWishlist, useDeleteWishlistItem, useMoveToBasket } from '../hooks/useWishlist'
 import Navbar from '../components/Navbar'
+import toast from 'react-hot-toast'
 
 export default function WishlistPage() {
   const { data: items, isLoading, error } = useWishlist()
@@ -63,7 +64,10 @@ export default function WishlistPage() {
 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => moveToBasket.mutate(item.product.id)}
+                    onClick={() => moveToBasket.mutate(item.product.id, {
+                      onSuccess: () => toast.success('Moved to basket'),
+                      onError: (err) => toast.error(err.response?.data?.detail || 'Failed to move to basket'),
+                    })}
                     disabled={item.product?.stock === 0 || moveToBasket.isPending}
                     className="text-xs bg-black text-white px-3 py-1.5 rounded hover:bg-gray-800 disabled:opacity-40"
                   >

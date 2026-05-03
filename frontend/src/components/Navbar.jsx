@@ -1,9 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import { useBasket } from '../hooks/useBasket'
 
 export default function Navbar() {
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
+  const { data: basket } = useBasket()
+
+  const itemCount = basket?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0
 
   const handleLogout = () => {
     logout()
@@ -24,12 +28,22 @@ export default function Navbar() {
           <Link to="/wishlist" className="text-sm text-gray-600 hover:text-black">
             Wishlist
           </Link>
-          <Link to="/basket" className="text-sm text-gray-600 hover:text-black">
+          <Link to="/basket" className="relative text-sm text-gray-600 hover:text-black">
             Basket
+            {itemCount > 0 && (
+              <span className="absolute -top-2 -right-4 bg-black text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                {itemCount > 9 ? '9+' : itemCount}
+              </span>
+            )}
           </Link>
           <Link to="/orders" className="text-sm text-gray-600 hover:text-black">
             Orders
           </Link>
+          {user?.is_admin && (
+            <Link to="/admin" className="text-sm text-gray-600 hover:text-black">
+              Admin
+            </Link>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
@@ -41,6 +55,7 @@ export default function Navbar() {
             Sign out
           </button>
         </div>
+
       </div>
     </nav>
   )

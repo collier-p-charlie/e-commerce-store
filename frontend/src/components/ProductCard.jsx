@@ -1,5 +1,6 @@
 import { useAddBasketItem, useDeleteBasketItem } from '../hooks/useBasket'
 import { useAddWishlistItem, useDeleteWishlistItem, useWishlist } from '../hooks/useWishlist'
+import toast from 'react-hot-toast'
 
 export default function ProductCard({ product }) {
   const addToBasket = useAddBasketItem()
@@ -12,9 +13,15 @@ export default function ProductCard({ product }) {
 
   const handleWishlistClick = () => {
     if (isWishlisted) {
-      deleteWishlistItem.mutate(wishlistItem.id)
+      deleteWishlistItem.mutate(wishlistItem.id, {
+        onSuccess: () => toast.success('Removed from wishlist'),
+        onError: () => toast.error('Failed to update wishlist'),
+      })
     } else {
-      addToWishlist.mutate({ product_id: product.id })
+      addToWishlist.mutate({ product_id: product.id }, {
+        onSuccess: () => toast.success('Added to wishlist'),
+        onError: (err) => toast.error(err.response?.data?.detail || 'Failed to add to wishlist'),
+      })
     }
   }
 
@@ -62,7 +69,13 @@ export default function ProductCard({ product }) {
 
         <div className="flex gap-2 mt-3">
           <button
-            onClick={() => addToBasket.mutate({ product_id: product.id, quantity: 1 })}
+            onClick={() => addToBasket.mutate(
+              { product_id: product.id, quantity: 1 },
+              {
+                onSuccess: () => toast.success('Added to basket'),
+                onError: (err) => toast.error(err.response?.data?.detail || 'Failed to add to basket'),
+              }
+            )}
             disabled={product.stock === 0 || addToBasket.isPending}
             className="flex-1 bg-black text-white text-xs py-2 rounded hover:bg-gray-800 disabled:opacity-40"
           >

@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useBasket, useUpdateBasketItem, useDeleteBasketItem, useClearBasket } from '../hooks/useBasket'
 import { useCreateOrder } from '../hooks/useOrders'
 import Navbar from '../components/Navbar'
+import toast from 'react-hot-toast'
 
 export default function BasketPage() {
   const navigate = useNavigate()
@@ -23,9 +24,10 @@ export default function BasketPage() {
   const handleCheckout = async () => {
     try {
       const { data } = await createOrder.mutateAsync()
+      toast.success('Order placed successfully')
       navigate(`/orders/${data.id}`)
     } catch (err) {
-      alert(err.response?.data?.detail || 'Checkout failed')
+      toast.error(err.response?.data?.detail || 'Checkout failed')
     }
   }
 

@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import products, basket, wishlist, orders, auth
+from app.routers import products, basket, wishlist, orders, auth, admin
 
 app = FastAPI(
     title="Shop API",
@@ -23,6 +23,7 @@ app.include_router(products.router, prefix="/products", tags=["products"])
 app.include_router(basket.router, prefix="/basket", tags=["basket"])
 app.include_router(wishlist.router, prefix="/wishlist", tags=["wishlist"])
 app.include_router(orders.router, prefix="/orders", tags=["orders"])
+app.include_router(admin.router, prefix="/admin", tags=["admin"])
 
 
 @app.get("/health")

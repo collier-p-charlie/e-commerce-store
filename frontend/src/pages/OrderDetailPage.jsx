@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useOrder, useCancelOrder } from '../hooks/useOrders'
 import Navbar from '../components/Navbar'
+import toast from 'react-hot-toast'
 
 const statusColors = {
   pending:   'bg-yellow-100 text-yellow-800',
@@ -20,8 +21,9 @@ export default function OrderDetailPage() {
     if (!confirm('Are you sure you want to cancel this order?')) return
     try {
       await cancelOrder.mutateAsync(id)
+      toast.success('Order cancelled')
     } catch (err) {
-      alert(err.response?.data?.detail || 'Failed to cancel order')
+      toast.error(err.response?.data?.detail || 'Failed to cancel order')
     }
   }
 

@@ -40,6 +40,7 @@ cd frontend
 npm install
 npm install axios react-router-dom zustand @tanstack/react-query
 npm install -D tailwindcss postcss autoprefixer @tailwindcss/vite
+npm install react-hot-toast
 ```
 
 To run the server we run
