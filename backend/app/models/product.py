@@ -1,4 +1,4 @@
-from sqlalchemy import DateTime, Integer, String, Text, func, Numeric
+from sqlalchemy import DateTime, Integer, String, Text, func, Numeric, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -14,4 +14,5 @@ class Product(Base):
     stock: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     category: Mapped[str] = mapped_column(String(100), nullable=True, index=True)  # as we want to query by category
     image_url: Mapped[str] = mapped_column(String(500), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[DateTime] = mapped_column(DateTime, server_default=func.now())
